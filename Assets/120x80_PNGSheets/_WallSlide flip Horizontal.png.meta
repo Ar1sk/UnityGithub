@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 32f4682dbf2b0489b9b402e364af772e
+guid: ecde83ad1bc6a4caa878682a70df932d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,10 +117,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _WallSlide_0
+      name: _WallSlide flip Horizontal_0
       rect:
         serializedVersion: 2
-        x: 48
+        x: 51
         y: 3
         width: 21
         height: 32
@@ -131,17 +131,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67f575c842fb24d6daf558b536837108
-      internalID: 52958032
+      spriteID: 28822371e0b0a43de81540e170ee4b91
+      internalID: 981308293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _WallSlide_1
+      name: _WallSlide flip Horizontal_1
       rect:
         serializedVersion: 2
-        x: 168
+        x: 171
         y: 3
         width: 21
         height: 32
@@ -152,17 +152,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fe51da9730b94723be518f07389e2ca
-      internalID: -595195574
+      spriteID: 1149feeab0ccf44709c3114e30159c38
+      internalID: -1338153099
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _WallSlide_2
+      name: _WallSlide flip Horizontal_2
       rect:
         serializedVersion: 2
-        x: 288
+        x: 291
         y: 3
         width: 21
         height: 32
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 730ad56efceee4514b249e4f8d94b0c1
-      internalID: -1748984616
+      spriteID: 80d8cbf53ceb24235a6655eaf5620591
+      internalID: -1391781283
       vertices: []
       indices: 
       edges: []
@@ -190,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      _WallSlide_0: 52958032
-      _WallSlide_1: -595195574
-      _WallSlide_2: -1748984616
+      _WallSlide flip Horizontal_1: -1338153099
+      _WallSlide flip Horizontal_2: -1391781283
+      _WallSlide flip Horizontal_0: 981308293
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
