@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (facingRight && dirX < 0)
                 Flip();
-            else if (facingRight && dirX < 0)
+            else if (!facingRight && dirX > 0)
                 Flip();
         }
         if (rb.velocity.x > 0 && !facingRight)
@@ -151,6 +151,10 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, groundLayer);
 
+        if(isWallDetected)
+        {
+            Debug.Log("Wall Detected");
+        }
         if(!isGrounded && rb.velocity.y < 0)
             canWallSlide = true;
             
