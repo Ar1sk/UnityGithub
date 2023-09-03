@@ -151,10 +151,6 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, groundLayer);
 
-        if(isWallDetected)
-        {
-            Debug.Log("Wall Detected");
-        }
         if(!isGrounded && rb.velocity.y < 0)
             canWallSlide = true;
             
