@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private Vector2 wallJumpDirection;
+    [SerializeField] private LayerMask wallLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,10 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded)
         {
             canMove = true;
+            canDoubleJump = true;
+        }
+        if(isWallDetected)
+        {
             canDoubleJump = true;
         }
         if(isWallDetected && canWallSlide)
@@ -151,8 +156,10 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, groundLayer);
+        isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, wallLayer);
 
+        if(isGrounded)
+            Debug.Log("Ground Detected");
         if(!isGrounded && rb.velocity.y < 0)
             canWallSlide = true;
             
