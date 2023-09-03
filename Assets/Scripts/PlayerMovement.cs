@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     //Component
     private Rigidbody2D rb;
     private Animator anim;
+    private CapsuleCollider2D cap;
 
 
     //Declare
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        cap = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
