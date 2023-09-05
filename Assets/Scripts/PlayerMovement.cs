@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchHeight;
     [SerializeField] private Transform headCheck;
     [SerializeField] private float headCheckLength;
+        
 
     // Start is called before the first frame update
     void Start()
