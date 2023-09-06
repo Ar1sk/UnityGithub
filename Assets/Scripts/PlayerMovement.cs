@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     //SerializeField
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float crouchSpeed = 2f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius;
@@ -83,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
 
+        if(isCrouching)
+            rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
     }
 
     private void CheckInput()
@@ -113,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
             normalCap.enabled = isCrouching;
             CrouchCap.enabled = !isCrouching;
+            
 
     }
 
