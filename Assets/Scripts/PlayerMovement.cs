@@ -7,14 +7,12 @@ public class PlayerMovement : MonoBehaviour
     //Component
     private Rigidbody2D rb;
     private Animator anim;
-    private CapsuleCollider2D cap;
-    private Vector2 normalHeight;
+    [SerializeField] private Collider2D normalCap;
+    [SerializeField] private Collider2D CrouchCap;
 
 
     //Declare
     float dirX;
-    float dirY;
-    private bool isCrouching;
     private bool facingRight = true;
     private bool isGrounded;
     private bool canDoubleJump;
@@ -24,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private bool canWallJump = true;
     private int facingDirection = 1;
+    private bool isCrouching;
+
+
 
     //SerializeField
     [SerializeField] private float moveSpeed = 5f;
@@ -35,18 +36,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private Vector2 wallJumpDirection;
     [SerializeField] private LayerMask wallLayer;
-    [SerializeField] private float crouchHeight;
-    [SerializeField] private Transform headCheck;
-    [SerializeField] private float headCheckLength;
-        
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        cap = GetComponent<CapsuleCollider2D>();
-        normalHeight = transform.localScale;
+        CrouchCap = GetComponent<Collider2D>();
+        CrouchCap.enabled = false;
+        normalCap = GetComponent<Collider2D>();
+        normalCap.enabled = true;
     }
 
     // Update is called once per frame
@@ -66,10 +66,12 @@ public class PlayerMovement : MonoBehaviour
             canMove = true;
             canDoubleJump = true;
         }
+
         if(isWallDetected)
         {
             canDoubleJump = true;
         }
+
         if(isWallDetected && canWallSlide)
         {
             isWallSliding = true;
@@ -80,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
             Move();
         }
-        
+
     }
 
     private void CheckInput()
@@ -93,28 +95,25 @@ public class PlayerMovement : MonoBehaviour
             dirX = Input.GetAxisRaw("Horizontal");
         }
 
-            dirY = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(KeyCode.S))
             Crouch();
+    }
+
+    private void Move()
+    {
+
+        if(canMove)
+            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
     }
 
     private void Crouch()
     {
-        bool isHeadHitting = HeadDetect();
-        if((dirY < 0 || isHeadHitting) && isGrounded)
-        {
-            if(transform.localScale.y != crouchHeight)
-            transform.localScale = new Vector2(normalHeight.x, crouchHeight);
-        }
-        else
-        {
-            if(transform.localScale.y != normalHeight.y)
-                transform.localScale = normalHeight;
-        }
-    }
-    private void Move()
-    {
-        if(canMove)
-            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        if(isGrounded)
+            isCrouching = !isCrouching;
+
+            normalCap.enabled = isCrouching;
+            CrouchCap.enabled = !isCrouching;
+
     }
 
     private void JumpButton()
@@ -153,12 +152,14 @@ public class PlayerMovement : MonoBehaviour
     private void AnimatorController()
     {
         bool isRunning = rb.velocity.x != 0;
+        
 
         anim.SetFloat("yVelocity", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isWallSliding", isWallSliding);
         anim.SetBool("isCrouching", isCrouching);
+        anim.SetBool("isCrouchWalk", isRunning);
     }
     
     private void FlipController()
@@ -183,12 +184,6 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    bool HeadDetect()
-    {
-        bool hit = Physics2D.Raycast(headCheck.position, Vector2.up, headCheckLength, groundLayer);
-        return hit;
-    }
-
     private void CollisionCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
@@ -200,12 +195,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(headCheck == null) return;
 
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x +wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
-        Vector2 from = headCheck.position;
-        Vector2 to = new Vector2(headCheck.position.x, headCheck.position.y + headCheckLength);
-        Gizmos.DrawLine(from, to);
     }
 }
