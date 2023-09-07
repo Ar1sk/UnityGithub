@@ -21,12 +21,15 @@ public class PlayerMovement : MonoBehaviour
     private bool isWallSliding;
     private bool canMove = true;
     private bool canWallJump = true;
-    private int facingDirection = 1;
     private bool isCrouching;
+    private int facingDirection = 1;
+
 
 
 
     //SerializeField
+    [SerializeField] private float headCheckLength;
+    [SerializeField] private Transform headCheck;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float crouchSpeed = 2f;
@@ -86,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(isCrouching)
             rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
+
     }
 
     private void CheckInput()
@@ -111,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
-        if(isGrounded)
+        if (isGrounded)
             isCrouching = !isCrouching;
 
             normalCap.enabled = isCrouching;
@@ -196,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
         if(!isGrounded && rb.velocity.y < 0)
             canWallSlide = true;
     }
+
 
     private void OnDrawGizmos()
     {
