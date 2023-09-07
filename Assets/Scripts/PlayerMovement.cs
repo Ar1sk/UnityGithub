@@ -28,8 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     //SerializeField
-    [SerializeField] private float headCheckLength;
-    [SerializeField] private Transform headCheck;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float crouchSpeed = 2f;
@@ -120,8 +118,6 @@ public class PlayerMovement : MonoBehaviour
 
             normalCap.enabled = isCrouching;
             CrouchCap.enabled = !isCrouching;
-            
-
     }
 
     private void JumpButton()
