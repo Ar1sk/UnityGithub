@@ -13,8 +13,8 @@ TagManager:
   - UI
   - Player
   - Wall
-  - 
-  - 
+  - Portal
+  - Sign
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 4065809275
+    locked: 0
+  - name: Portal
+    uniqueID: 1665919187
     locked: 0
   - name: Player
     uniqueID: 3502346971
