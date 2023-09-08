@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //Component
-    private Rigidbody2D rb;
-    private Animator anim;
+    Rigidbody2D rb;
+    Animator anim;
     [SerializeField] private Collider2D normalCap;
     [SerializeField] private Collider2D CrouchCap;
 
@@ -23,9 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private bool canWallJump = true;
     private bool isCrouching;
     private int facingDirection = 1;
-
-
-
 
     //SerializeField
     [SerializeField] private float moveSpeed = 5f;
