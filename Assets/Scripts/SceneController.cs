@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    Rigidbody2D rb;
     public static SceneController instance;
     [SerializeField] Animator transitionAnim;
 
