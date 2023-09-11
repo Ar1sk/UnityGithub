@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spike
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Wall
   - Portal
   - Sign
-  - 
+  - Spike
   - 
   - 
   - 
@@ -49,6 +50,9 @@ TagManager:
     locked: 0
   - name: Portal
     uniqueID: 1665919187
+    locked: 0
+  - name: Spike
+    uniqueID: 1538500767
     locked: 0
   - name: Player
     uniqueID: 3502346971
