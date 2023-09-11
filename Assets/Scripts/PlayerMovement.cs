@@ -23,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
     private bool canWallJump = true;
     private bool isCrouching;
     private int facingDirection = 1;
+    public float HeadCheckLength;
 
     //SerializeField
+    [SerializeField] private Transform headCheck;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float crouchSpeed = 2f;
@@ -51,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CollisionCheck();
         CheckInput();
         FlipController();
@@ -110,11 +111,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
-        if (isGrounded)
-            isCrouching = !isCrouching;
-
-            normalCap.enabled = isCrouching;
+        isCrouching = !isCrouching;
+        bool isHeadHitting = HeadDetect();
+        if (isGrounded || isHeadHitting)
+        {
             CrouchCap.enabled = !isCrouching;
+
+        }
+        else if(isGrounded)
+        {
+            normalCap.enabled = isCrouching;
+        }
     }
 
     private void JumpButton()
@@ -160,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isWallSliding", isWallSliding);
         anim.SetBool("isCrouching", isCrouching);
-        anim.SetBool("isCrouchWalk", isRunning);
+        //anim.SetBool("isCrouchWalk", isRunning);
     }
     
     private void FlipController()
@@ -194,11 +201,20 @@ public class PlayerMovement : MonoBehaviour
             canWallSlide = true;
     }
 
+    bool HeadDetect()
+    {
+        bool hit = Physics2D.Raycast(headCheck.position, Vector2.up, HeadCheckLength, groundLayer);
+        return hit;
+    }
 
     private void OnDrawGizmos()
     {
 
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x +wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
+        if (headCheck == null) return;
+        Vector2 from = headCheck.position;
+        Vector2 to = new Vector2(headCheck.position.x, headCheck.position.y + HeadCheckLength);
+        Gizmos.DrawLine(from, to);
     }
 }
