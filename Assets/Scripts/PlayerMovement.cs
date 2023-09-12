@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
     [SerializeField] private Collider2D normalCap;
     [SerializeField] private Collider2D CrouchCap;
+    private TrailRenderer trailRender;
 
 
     //Declare
@@ -23,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     private bool canWallJump = true;
     private bool isCrouching;
     private int facingDirection = 1;
+    private Vector2 dashingDir;
+    private bool canDash = true;
+    private bool isDashing;
 
     //SerializeFiel
     [SerializeField] private float moveSpeed = 5f;
@@ -35,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private Vector2 wallJumpDirection;
     [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private float dashingVelocity = 15f;
+    [SerializeField] private float dashingTime = 0.5f;
 
 
     // Start is called before the first frame update
@@ -46,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         CrouchCap.enabled = false;
         normalCap = GetComponent<Collider2D>();
         normalCap.enabled = true;
+        trailRender = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -99,6 +106,46 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded)
             if (Input.GetKeyDown(KeyCode.S))
                 Crouch();
+        if(Input.GetButtonDown("Dash"))
+            Dash();
+    }
+
+    private void Dash()
+    {
+
+        if (canDash)
+        {
+            isDashing = true;
+            canDash = false;
+            trailRender.emitting = true;
+            dashingDir = new Vector2(dirX, Input.GetAxisRaw("Vertical"));
+
+            if(dashingDir == Vector2.zero)
+            {
+                dashingDir = new Vector2(transform.localScale.x, 0);
+            }
+            StartCoroutine(StopDashing());
+        }
+
+        if(isDashing)
+        {
+            rb.velocity = dashingDir.normalized * dashingVelocity;
+            return;
+        }
+
+        if (isGrounded)
+        {
+            canDash = true;
+
+        }
+    }
+
+    IEnumerator StopDashing()
+    {
+        yield return new WaitForSeconds(dashingTime);
+        trailRender.emitting = false;
+        isDashing = false;
+
     }
 
     private void Move()
@@ -161,6 +208,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isWallSliding", isWallSliding);
         anim.SetBool("isCrouching", isCrouching);
         //anim.SetBool("isCrouchWalk", isRunning);
+        anim.SetBool("isDashing", isDashing);
     }
     
     private void FlipController()
