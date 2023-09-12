@@ -7,12 +7,14 @@ public class PlayerLife : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    [SerializeField] private Animator transitionAnim;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        transitionAnim = GetComponent<Animator>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -27,10 +29,18 @@ public class PlayerLife : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static; 
         anim.SetTrigger("death");
+        Restart();
     }
 
-    private void RestartLevel()
+    private void Restart()
     {
+        StartCoroutine(RestartLevel());
+    }
+    IEnumerator RestartLevel()
+    {
+        transitionAnim.SetTrigger("End");
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        transitionAnim.SetTrigger("Start");
     }
 }
