@@ -219,7 +219,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckRadius: 0.16
+  groundCheckRadius: 0.07
   wallCheck: {fileID: 6356134163682181164}
   wallCheckDistance: 0.2
   wallJumpDirection: {x: 3.5, y: 8}

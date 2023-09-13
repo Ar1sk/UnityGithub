@@ -36,11 +36,9 @@ public class PlayerLife : MonoBehaviour
     {
         StartCoroutine(RestartLevel());
     }
-    IEnumerator RestartLevel()
+    private IEnumerator RestartLevel()
     {
-        transitionAnim.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        transitionAnim.SetTrigger("Start");
     }
 }

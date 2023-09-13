@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         {
             canMove = true;
             canDoubleJump = true;
+            canDash = true;
         }
 
         if(isWallDetected)
@@ -88,8 +89,17 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
 
-        if(isCrouching)
+        if (isCrouching)
+        {
             rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
+            canDash = false;
+        }
+
+        if (isDashing)
+        {
+            rb.velocity = dashingDir.normalized * dashingVelocity;
+            return;
+        }
 
     }
 
@@ -106,19 +116,19 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded)
             if (Input.GetKeyDown(KeyCode.S))
                 Crouch();
-        if(Input.GetButtonDown("Dash"))
+
             Dash();
     }
 
     private void Dash()
     {
-
-        if (canDash)
+        var dashInput = Input.GetButtonDown("Dash");
+        if (dashInput && canDash)
         {
             isDashing = true;
             canDash = false;
             trailRender.emitting = true;
-            dashingDir = new Vector2(dirX, Input.GetAxisRaw("Vertical"));
+            dashingDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
             if(dashingDir == Vector2.zero)
             {
@@ -127,20 +137,9 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(StopDashing());
         }
 
-        if(isDashing)
-        {
-            rb.velocity = dashingDir.normalized * dashingVelocity;
-            return;
-        }
-
-        if (isGrounded)
-        {
-            canDash = true;
-
-        }
     }
 
-    IEnumerator StopDashing()
+    private IEnumerator StopDashing()
     {
         yield return new WaitForSeconds(dashingTime);
         trailRender.emitting = false;
