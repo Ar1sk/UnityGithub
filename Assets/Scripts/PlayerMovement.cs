@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
             if(dashingDir == Vector2.zero)
             {
-                dashingDir = new Vector2(0, 0);
+                dashingDir = new Vector2(0 , 0);
             }
             StartCoroutine(StopDashing());
         }
