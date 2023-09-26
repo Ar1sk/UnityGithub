@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isWallSliding;
     private bool canMove = true;
     private bool canWallJump = true;
-    private bool isCrouching;
     private int facingDirection = 1;
     private Vector2 dashingDir;
     private bool canDash = true;
@@ -31,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     //SerializeFiel
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
-    [SerializeField] private float crouchSpeed = 2f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius;
@@ -48,10 +46,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        CrouchCap = GetComponent<Collider2D>();
-        CrouchCap.enabled = false;
-        normalCap = GetComponent<Collider2D>();
-        normalCap.enabled = true;
         trailRender = GetComponent<TrailRenderer>();
     }
 
@@ -89,12 +83,6 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
 
-        if (isCrouching)
-        {
-            rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
-            canDash = false;
-        }
-
         if (isDashing)
         {
             rb.velocity = dashingDir.normalized * dashingVelocity;
@@ -112,10 +100,6 @@ public class PlayerMovement : MonoBehaviour
         {
             dirX = Input.GetAxisRaw("Horizontal");
         }
-
-        if(isGrounded)
-            if (Input.GetKeyDown(KeyCode.S))
-                Crouch();
 
             Dash();
     }
@@ -154,14 +138,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
     }
 
-    private void Crouch()
-    {
-        isCrouching = !isCrouching;
-        
-            CrouchCap.enabled = isCrouching;
-            normalCap.enabled = !isCrouching;
-        
-    }
 
     private void JumpButton()
     {
@@ -205,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isWallSliding", isWallSliding);
-        anim.SetBool("isCrouching", isCrouching);
+        //anim.SetBool("isCrouching", isCrouching);
         //anim.SetBool("isCrouchWalk", isRunning);
         anim.SetBool("isDashing", isDashing);
     }
