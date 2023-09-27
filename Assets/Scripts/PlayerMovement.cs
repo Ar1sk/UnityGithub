@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     private bool isDashing;
 
-    //SerializeFiel
+    //SerializeField
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float crouchSpeed = 2f;
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
             canDash = true;
         }
 
+        //WallSlide
         if(isWallDetected)
         {
             canDoubleJump = true;
@@ -87,13 +88,13 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
             Move();
         }
-
+        //Dashing
         if (isDashing)
         {
             rb.velocity = dashingDir.normalized * dashingVelocity;
             return;
         }
-
+        //Crouching
         bool isHeadHitting = HeadDetect();
 
         if (isCrouching)
