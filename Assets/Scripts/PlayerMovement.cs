@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isWallSliding;
     private bool canMove = true;
     private bool canWallJump = true;
+    private bool isCrouching = false;
+    private bool canCrouch = true;
     private int facingDirection = 1;
     private Vector2 dashingDir;
     private bool canDash = true;
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     //SerializeFiel
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float crouchSpeed = 2f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius;
@@ -39,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float dashingVelocity = 15f;
     [SerializeField] private float dashingTime = 0.5f;
+    [SerializeField] private Transform headCheck;
+    [SerializeField] private float headCheckLength;
 
 
     // Start is called before the first frame update
@@ -89,6 +94,34 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        bool isHeadHitting = HeadDetect();
+
+        if (isCrouching)
+        {
+            canDash = false;
+            rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
+        }
+
+        if(isHeadHitting)
+        {
+            canCrouch = false;
+        }
+        else if(!isHeadHitting)
+        {
+            canCrouch = true;
+        }
+
+        if(!isCrouching)
+        {
+            normalCap.enabled = true;
+            CrouchCap.enabled = false;
+        }
+        else
+        {
+            normalCap.enabled = !isCrouching;
+            CrouchCap.enabled = isCrouching;
+        }
+
     }
 
     private void CheckInput()
@@ -101,6 +134,11 @@ public class PlayerMovement : MonoBehaviour
             dirX = Input.GetAxisRaw("Horizontal");
         }
 
+        if (isGrounded && canCrouch)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+                Crouch();
+        }
             Dash();
     }
 
@@ -133,9 +171,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-
         if(canMove)
             rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+    }
+
+    private void Crouch()
+    {
+        isCrouching = !isCrouching;        
+    }
+
+    private bool HeadDetect()
+    {
+        bool hit = Physics2D.Raycast(headCheck.position, Vector2.up, headCheckLength, groundLayer);
+        return hit;
     }
 
 
@@ -181,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isWallSliding", isWallSliding);
-        //anim.SetBool("isCrouching", isCrouching);
+        anim.SetBool("isCrouching", isCrouching);
         //anim.SetBool("isCrouchWalk", isRunning);
         anim.SetBool("isDashing", isDashing);
     }
@@ -219,7 +267,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (headCheck == null) return;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x +wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
+        Vector2 from = headCheck.position;
+        Vector2 to = new Vector2(headCheck.position.x, headCheck.position.y + headCheckLength);
+        Gizmos.DrawLine(from, to);
     }
 }
