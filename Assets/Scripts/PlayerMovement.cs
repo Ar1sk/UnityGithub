@@ -73,15 +73,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //WallSlide
-        if(isWallDetected)
-        {
-            canDoubleJump = true;
-        }
-
         if(isWallDetected && canWallSlide)
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
+            canDoubleJump = true;
         }
         else if(!isWallDetected)
         {
@@ -187,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
         return hit;
     }
 
-
     private void JumpButton()
     {
         if(isWallSliding && canWallJump)
@@ -225,7 +220,6 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isRunning = rb.velocity.x != 0;
         
-
         anim.SetFloat("yVelocity", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isRunning", isRunning);
