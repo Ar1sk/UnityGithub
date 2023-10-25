@@ -36,6 +36,12 @@ public class GAgent : MonoBehaviour
     }
 
     bool invoked = false;
+    void CompleteAction()
+    {
+        currentAction.running = false;
+        currentAction.PostPerform();
+        invoked = false;
+    }
     
     void LateUpdate()
     {
@@ -46,9 +52,10 @@ public class GAgent : MonoBehaviour
                 if(!invoked)
                 {
                     Invoke("CompleteAction", currentAction.duration);
-                    Invoke = true;
+                    invoked = true;
                 }
             }
+            return;
         }
 
         if (planner == null || actionQueue == null)
@@ -68,5 +75,32 @@ public class GAgent : MonoBehaviour
             }
         }
 
+        if(actionQueue != null && actionQueue.Count == 0)
+        {
+            if(currentGoal.remove)
+            {
+                goals.Remove(currentGoal);
+            }
+            planner = null;
+        }
+        if(actionQueue != null && actionQueue.Count > 0)
+        {
+            currentAction = actionQueue.Dequeue();
+            if(currentAction.PrePerform())
+            {
+                if (currentAction.target == null && currentAction.targetTag != "")
+                    currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
+
+                if(currentAction.targetTag != null)
+                {
+                    currentAction.running = true;
+                    currentAction.agent.SetDestination(currentAction.target.transform.position);
+                }
+            }
+            else
+            {
+                actionQueue = null;
+            }
+        }
     }
 }
