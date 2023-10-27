@@ -19,7 +19,7 @@ TagManager:
   - Sign
   - Spike
   - Enemies
-  - 
+  - Mesh
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Mesh
+    uniqueID: 310677865
+    locked: 0
   - name: Ground
     uniqueID: 3448801749
     locked: 0
@@ -54,6 +57,9 @@ TagManager:
     locked: 0
   - name: Spike
     uniqueID: 1538500767
+    locked: 0
+  - name: Enemies
+    uniqueID: 172780763
     locked: 0
   - name: Player
     uniqueID: 3502346971
