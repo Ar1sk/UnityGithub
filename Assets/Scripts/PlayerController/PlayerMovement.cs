@@ -133,8 +133,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && canCrouch)
         {
-            if (Input.GetKeyDown(KeyCode.S))
-                Crouch();
+            //if (Input.GetKeyDown(KeyCode.S))
+                //Crouch();
         }
             Dash();
     }

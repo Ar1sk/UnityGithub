@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Test Scene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/SmallRoom 1.1.unity
-    guid: 071c13a479453469c82a934b0e65bf72
+    path: Assets/Scenes/Main Menu.unity
+    guid: 00a33584a70b3409f89d0a799bc22996
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: cbdaca768f47d449c8ecd7420779e3e9
@@ -23,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Underground1.unity
     guid: 2836a91637f644e6190727ce805a8c3f
+  - enabled: 1
+    path: Assets/Scenes/Underground1 1.unity
+    guid: 91ce51d1ecf7e43848cd082033bbfe36
+  - enabled: 1
+    path: Assets/Scenes/Playground 1.unity
+    guid: 4dcc2f1ac011c43b4945e424bd70b993
+  - enabled: 1
+    path: Assets/Scenes/SmallRoom 1.1.unity
+    guid: 071c13a479453469c82a934b0e65bf72
+  - enabled: 1
+    path: Assets/Scenes/Test Scene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
