@@ -34,6 +34,7 @@ public class Health : MonoBehaviour
         }
 
         this.health -= amount;
+        anim.SetTrigger("getHit");
 
         if(health <= 0)
         {

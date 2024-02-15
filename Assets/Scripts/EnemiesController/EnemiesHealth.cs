@@ -13,7 +13,7 @@ public class EnemiesHealth : MonoBehaviour
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInParent<Animator>();
     }
 
     public void Damage(int amount)
@@ -28,6 +28,7 @@ public class EnemiesHealth : MonoBehaviour
 
         if(health <= 0)
         {
+            anim.SetTrigger("Die");
             Die();
         }
     }
