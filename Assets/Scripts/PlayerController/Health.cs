@@ -8,6 +8,10 @@ public class Health : MonoBehaviour
 {
     private Rigidbody2D rb;
 
+    private Collider2D hitbox;
+
+    private Animator anim;
+
     public bool IsInvincible { get; set; }
 
     public UnityEvent OnDied;
@@ -22,6 +26,8 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        hitbox = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -43,7 +49,6 @@ public class Health : MonoBehaviour
         }
 
         this.health -= amount;
-
         OnHealthChanged.Invoke();
 
         if(health <= 0)
@@ -55,6 +60,7 @@ public class Health : MonoBehaviour
         else
         {
             OnDamage.Invoke();
+            anim.SetTrigger("getHit");
         }
     }
 

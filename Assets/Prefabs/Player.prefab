@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 6356134161752413095}
   - component: {fileID: 6356134161752413101}
   - component: {fileID: 6356134161752413093}
-  - component: {fileID: 2779234204115361831}
   - component: {fileID: 6356134161752413090}
   - component: {fileID: 7625863861962858338}
   - component: {fileID: 6356134161752413089}
@@ -236,7 +235,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.008972168, y: -0.100596845}
+  m_Offset: {x: 0.008972168, y: -0.08070439}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -247,33 +246,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1774292, y: 1.3371669}
-  m_EdgeRadius: 0
---- !u!61 &2779234204115361831
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6356134161752413103}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.013532385, y: -0.03793168}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6666666, y: 1.5416666}
-    newSize: {x: 1.6666666, y: 1.5416666}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.4016957, y: 0.62625074}
+  m_Size: {x: 1.1774292, y: 1.297382}
   m_EdgeRadius: 0
 --- !u!114 &6356134161752413090
 MonoBehaviour:
@@ -288,10 +261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalCap: {fileID: 6356134161752413093}
-  CrouchCap: {fileID: 2779234204115361831}
   moveSpeed: 5
   jumpForce: 8.5
-  crouchSpeed: 2
   groundCheck: {fileID: 6356134161649047740}
   groundLayer:
     serializedVersion: 2
@@ -510,6 +481,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6356134161752413089}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: death
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamage:
     m_PersistentCalls:
       m_Calls:
@@ -554,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c220c6274e1534c418cc50aa752e0478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvincibilityDuration: 1.5
+  InvincibilityDuration: 1
 --- !u!1 &6356134162061648364
 GameObject:
   m_ObjectHideFlags: 0

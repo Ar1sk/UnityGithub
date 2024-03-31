@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     [SerializeField] private Collider2D normalCap;
-    [SerializeField] private Collider2D CrouchCap;
     private TrailRenderer trailRender;
 
 
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private bool canWallJump = true;
     private bool isCrouching = false;
-    private bool canCrouch = true;
     private int facingDirection = 1;
     private Vector2 dashingDir;
     private bool canDash = true;
@@ -32,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     //SerializeField
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
-    [SerializeField] private float crouchSpeed = 2f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius;
@@ -90,34 +87,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = dashingDir.normalized * dashingVelocity;
             return;
         }
-        //Crouching
-        bool isHeadHitting = HeadDetect();
-
-        if (isCrouching)
-        {
-            canDash = false;
-            rb.velocity = new Vector2(dirX * crouchSpeed, rb.velocity.y * 0f);
-        }
-
-        if(isHeadHitting)
-        {
-            canCrouch = false;
-        }
-        else if(!isHeadHitting)
-        {
-            canCrouch = true;
-        }
-
-        if(!isCrouching)
-        {
-            normalCap.enabled = true;
-            CrouchCap.enabled = false;
-        }
-        else
-        {
-            normalCap.enabled = !isCrouching;
-            CrouchCap.enabled = isCrouching;
-        }
 
     }
 
@@ -129,12 +98,6 @@ public class PlayerMovement : MonoBehaviour
         if(canMove)
         {
             dirX = Input.GetAxisRaw("Horizontal");
-        }
-
-        if (isGrounded && canCrouch)
-        {
-            //if (Input.GetKeyDown(KeyCode.S))
-                //Crouch();
         }
             Dash();
     }
