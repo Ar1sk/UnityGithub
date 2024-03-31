@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private Animator anim;
 
-    [SerializeField] private Animator transitionAnim;
-    [SerializeField] private int health = 100;
+    public bool IsInvincible { get; set; }
 
-    private int MAX_HEALTH = 100;
+    public UnityEvent OnDied;
+
+    public UnityEvent OnDamage;
+
+    public UnityEvent OnHealthChanged;
+
+    [SerializeField] private float health;
+
+    [SerializeField] private float MAX_HEALTH;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        transitionAnim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -33,12 +37,32 @@ public class Health : MonoBehaviour
             throw new System.ArgumentOutOfRangeException("Cannot have negative Damage");
         }
 
+        if(IsInvincible)
+        {
+            return;
+        }
+
         this.health -= amount;
-        anim.SetTrigger("getHit");
+
+        OnHealthChanged.Invoke();
 
         if(health <= 0)
         {
-            Die();
+            this.health = 0;
+            OnDied.Invoke();
+            Restart();
+        }
+        else
+        {
+            OnDamage.Invoke();
+        }
+    }
+
+    public float RemainingHealthPercentage
+    {
+        get
+        {
+            return this.health / MAX_HEALTH;
         }
     }
 
@@ -59,13 +83,8 @@ public class Health : MonoBehaviour
         {
             this.health += amount;
         }
-    }
 
-    private void Die()
-    {
-        rb.bodyType = RigidbodyType2D.Static;
-        anim.SetTrigger("death");
-        Restart();
+        OnHealthChanged.Invoke();
     }
 
     private void Restart()
@@ -75,7 +94,7 @@ public class Health : MonoBehaviour
 
     private IEnumerator RestartLevel()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

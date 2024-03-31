@@ -5,40 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Animator anim;
-    [SerializeField] private Animator transitionAnim;
+    private Health healthController;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        transitionAnim = GetComponent<Animator>();
+        healthController = GetComponent<Health>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void StartInvincibility(float InvincibilityDuration)
     {
-        if(collision.gameObject.CompareTag("Spike"))
-        {
-            Die();
-        }
+        StartCoroutine(InvincibilityCoroutine(InvincibilityDuration));
     }
-
-    private void Die()
+     
+    private IEnumerator InvincibilityCoroutine(float InvincibilityDuration)
     {
-        rb.bodyType = RigidbodyType2D.Static; 
-        anim.SetTrigger("death");
-        Restart();
-    }
-
-    private void Restart()
-    {
-        StartCoroutine(RestartLevel());
-    }
-    private IEnumerator RestartLevel()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        healthController.IsInvincible = true; 
+        yield return new WaitForSeconds(InvincibilityDuration);
+        healthController.IsInvincible = false;
     }
 }
