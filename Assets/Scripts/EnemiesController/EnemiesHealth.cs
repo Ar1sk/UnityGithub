@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class EnemiesHealth : MonoBehaviour
 {
     public Animator anim;
+
+    public UnityEvent OnDied;
+
+    public UnityEvent OnDamage;
 
     [SerializeField] private int health = 100;
 
@@ -24,12 +29,14 @@ public class EnemiesHealth : MonoBehaviour
         }
 
         this.health -= amount;
-        anim.SetTrigger("HitEnemy");
 
         if(health <= 0)
         {
-            anim.SetTrigger("Die");
-            Die();
+            OnDied.Invoke();
+        }
+        else
+        {
+            OnDamage.Invoke();
         }
     }
 
@@ -51,11 +58,4 @@ public class EnemiesHealth : MonoBehaviour
             this.health += amount;
         }
     }
-
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
-
-
 }
