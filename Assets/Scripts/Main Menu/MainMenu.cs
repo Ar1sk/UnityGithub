@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public void mainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1f;
+    }
+
     public void playGame()
     {
         SceneManager.LoadScene("Playground");
@@ -12,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void optionGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Option");
     }
 
     public void quitGame()
