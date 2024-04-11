@@ -232,6 +232,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96053050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5291399989302646689, guid: 459583dc60942434c97490b86585447f, type: 3}
+  m_PrefabInstance: {fileID: 1082169623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcedd722cf8f4b91bd27f7f267a9a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &102772381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6356134161752413091, guid: ad82645007560447880fff683ccaab90, type: 3}
@@ -1831,6 +1842,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 528481155, guid: ad82645007560447880fff683ccaab90, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 96053050}
+    - target: {fileID: 5452610382483360525, guid: ad82645007560447880fff683ccaab90, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1544676085}
     - target: {fileID: 6356134161752413091, guid: ad82645007560447880fff683ccaab90, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1881,6 +1900,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad82645007560447880fff683ccaab90, type: 3}
+--- !u!1 &1544676085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5291399988431171274, guid: 459583dc60942434c97490b86585447f, type: 3}
+  m_PrefabInstance: {fileID: 1082169623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1643353852
 GameObject:
   m_ObjectHideFlags: 0
