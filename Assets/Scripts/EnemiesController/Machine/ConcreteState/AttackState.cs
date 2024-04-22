@@ -62,10 +62,14 @@ public class AttackState : EnemyState
             _exitTimer = 0f;
         }
 
-        Vector2 MoveDirection = (_playerTransform.position - enemy.transform.position).normalized;
-        enemy.MoveEnemy(MoveDirection * _movementSpeed);
+        enemy.MoveEnemy(Vector2.zero);
 
         _timer += Time.deltaTime;
+
+        if (enemy.IsInRange)
+        {
+            enemy.StateMachine.ChangeState(enemy.RunState);
+        }
 
     }
 

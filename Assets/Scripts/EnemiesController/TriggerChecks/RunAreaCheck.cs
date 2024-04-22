@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AggroCheck : MonoBehaviour
+public class RunAreaCheck : MonoBehaviour
 {
     public GameObject Playertarget { get; set; }
     private EnemyBase _enemy;
@@ -16,9 +16,9 @@ public class AggroCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject == Playertarget)
+        if (collision.gameObject == Playertarget)
         {
-            _enemy.SetAggroStatus(false);
+            _enemy.SetRunAway(true);
         }
     }
 
@@ -26,7 +26,7 @@ public class AggroCheck : MonoBehaviour
     {
         if (collision.gameObject == Playertarget)
         {
-            _enemy.SetAggroStatus(true);
+            _enemy.SetRunAway(false);
         }
     }
 }

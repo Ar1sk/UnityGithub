@@ -82,7 +82,7 @@ public class SamuraiMelee : MonoBehaviour
         timer = intTimer;
         attackMode = true;
 
-        anim.SetBool("canWxalk", false);
+        anim.SetBool("canWalk", false);
         anim.SetBool("Attack", true);
     }
 

@@ -6,7 +6,9 @@ public interface ITriggerCheckable
 {
     bool IsAggroed { get; set; }
     bool IsWithinAttackArea { get; set; }
+    bool IsInRange { get; set; }
 
     void SetAggroStatus(bool isAggroed);
     void SetAttackingArea(bool isWithinAttackArea);
+    void SetRunAway(bool isInRange);
 }

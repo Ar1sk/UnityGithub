@@ -20,8 +20,10 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
     public IdleState IdleState { get; set; }
     public ChaseState ChaseState { get; set; }
     public AttackState AttackState { get; set; }
+    public RunState RunState { get; set; }
     public bool IsAggroed { get; set; }
     public bool IsWithinAttackArea { get; set; }
+    public bool IsInRange { get; set; }
     #endregion
 
     #region Idle Variables
@@ -38,6 +40,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
         IdleState = new IdleState(this, StateMachine);
         ChaseState = new ChaseState(this, StateMachine);
         AttackState = new AttackState(this, StateMachine);
+        RunState = new RunState(this, StateMachine);
     }
 
     private void Start()
@@ -113,6 +116,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
     }
 
+    #region Distance Area
     public void SetAggroStatus(bool isAggroed)
     {
         IsAggroed = isAggroed;
@@ -122,6 +126,12 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
     {
         IsWithinAttackArea = isWithinAttackArea;
     }
+
+    public void SetRunAway(bool isInRange)
+    {
+        IsInRange = isInRange;
+    }
+    #endregion
 
     public enum AnimationTriggerType
     {
