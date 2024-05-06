@@ -1,15 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunState : EnemyState
+public class SniperRunState : SniperState
 {
-    public RunState(EnemyBase enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public SniperRunState(SniperBase enemy, SniperStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
 
-    public override void AnimationTriggerEvent(EnemyBase.AnimationTriggerType triggerType)
+    public override void AnimationTriggerEvent(SniperBase.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
         enemy.EnemyRunBaseInstance.DoAnimationTriggerEventLogic(triggerType);
@@ -38,5 +37,4 @@ public class RunState : EnemyState
         base.PhysicsUpdate();
         enemy.EnemyRunBaseInstance.DoPhysicsLogic();
     }
-
 }

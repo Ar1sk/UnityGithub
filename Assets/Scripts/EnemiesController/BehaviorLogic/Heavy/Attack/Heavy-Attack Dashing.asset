@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029bda464124c489786a6c5b1a29bb23, type: 3}
+  m_Name: Heavy-Attack Dashing
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 6047072624154032494, guid: 1ead20510950a4a808af44447b84bcc4, type: 3}
+  _bulletSpeed: 5
+  _timeBetweenShot: 1
+  _distanceToCountExit: 3
+  _timeTillExit: 3
