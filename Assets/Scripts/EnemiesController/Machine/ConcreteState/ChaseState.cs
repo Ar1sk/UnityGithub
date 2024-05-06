@@ -4,44 +4,37 @@ using UnityEngine;
 
 public class ChaseState : EnemyState
 {
-    private Transform _playerTransform;
-    private float _movementSpeed = 1.75f;
-
     public ChaseState(EnemyBase enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public override void AnimationTriggerEvent(EnemyBase.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
+        enemy.EnemyChaseBaseInstance.DoAnimationTriggerEventLogic(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
+        enemy.EnemyChaseBaseInstance.DoEnterLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        enemy.EnemyChaseBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
-        Vector2 MoveDirection = (_playerTransform.position - enemy.transform.position).normalized;
-        enemy.MoveEnemy(MoveDirection * _movementSpeed);
-
-        if (enemy.IsWithinAttackArea)
-        {
-            enemy.StateMachine.ChangeState(enemy.AttackState);
-        }
+        enemy.EnemyChaseBaseInstance.DoFrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        enemy.EnemyChaseBaseInstance.DoPhysicsLogic();
     }
 }

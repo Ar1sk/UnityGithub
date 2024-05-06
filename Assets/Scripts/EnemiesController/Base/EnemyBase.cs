@@ -26,15 +26,25 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
     public bool IsInRange { get; set; }
     #endregion
 
-    #region Idle Variables
-    public Rigidbody2D BulletPrefab;
-    public float MovementRange = 5f;
-    public float MovementSpeed = 1f;
+    #region ScriptableObject Variables
+    [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
+    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
+    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
+    [SerializeField] private EnemyRunSOBase EnemyRunBase;
     #endregion
 
+    public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
+    public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
+    public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
+    public EnemyRunSOBase EnemyRunBaseInstance { get; set; }
 
     private void Awake()
     {
+        EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
+        EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
+        EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
+        EnemyRunBaseInstance = Instantiate(EnemyRunBase);
+
         StateMachine = new EnemyStateMachine();
 
         IdleState = new IdleState(this, StateMachine);
@@ -48,6 +58,11 @@ public class EnemyBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerChe
         currentHealth = MaxHealth;
 
         RB = GetComponent<Rigidbody2D>();
+
+        EnemyIdleBaseInstance.Initialize(gameObject, this);
+        EnemyChaseBaseInstance.Initialize(gameObject, this);
+        EnemyAttackBaseInstance.Initialize(gameObject, this);
+        EnemyRunBaseInstance.Initialize(gameObject, this);
 
         StateMachine.Initialize(IdleState);
     }
