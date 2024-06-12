@@ -14,8 +14,6 @@ public class EnemiesHealth : MonoBehaviour
 
     [SerializeField] private int health = 100;
 
-    private int MAX_HEALTH = 100;
-
     void Start()
     {
         anim = GetComponentInParent<Animator>();
@@ -37,25 +35,6 @@ public class EnemiesHealth : MonoBehaviour
         else
         {
             OnDamage.Invoke();
-        }
-    }
-
-    public void Heal(int amount)
-    {
-        if (amount < 0)
-        {
-            throw new System.ArgumentOutOfRangeException("Cannot have ngeative healing");
-        }
-
-        bool wouldBeOverMaxHealth = health + amount > MAX_HEALTH;
-
-        if (wouldBeOverMaxHealth)
-        {
-            this.health = MAX_HEALTH;
-        }
-        else
-        {
-            this.health += amount;
         }
     }
 }
