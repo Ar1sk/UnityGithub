@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierTriggerArea : MonoBehaviour
+public class SoldierRunArea : MonoBehaviour
 {
     public GameObject Playertarget { get; set; }
     private SoldierBase _enemy;
@@ -18,7 +18,7 @@ public class SoldierTriggerArea : MonoBehaviour
     {
         if (collision.gameObject == Playertarget)
         {
-            _enemy.SetAttackingArea(true);
+            _enemy.SetRunAway(true);
         }
     }
 
@@ -26,7 +26,7 @@ public class SoldierTriggerArea : MonoBehaviour
     {
         if (collision.gameObject == Playertarget)
         {
-            _enemy.SetAttackingArea(false);
+            _enemy.SetRunAway(false);
         }
     }
 }

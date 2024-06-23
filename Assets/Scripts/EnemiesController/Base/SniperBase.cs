@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class SniperBase : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable
 {
-
     [field: SerializeField] public float MaxHealth { get; set; } = 100f;
     public float currentHealth { get; set; }
     public Rigidbody2D RB { get; set; }

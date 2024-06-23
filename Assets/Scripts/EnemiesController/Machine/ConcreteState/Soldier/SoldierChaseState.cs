@@ -2,17 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierChaseState : MonoBehaviour
+public class SoldierChaseState : SoldierState
 {
-    // Start is called before the first frame update
-    void Start()
+    public SoldierChaseState(SoldierBase enemy, SoldierStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void AnimationTriggerEvent(SoldierBase.AnimationTriggerType triggerType)
     {
-        
+        base.AnimationTriggerEvent(triggerType);
+        enemy.EnemyChaseBaseInstance.DoAnimationTriggerEventLogic(triggerType);
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+        enemy.EnemyChaseBaseInstance.DoEnterLogic();
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        enemy.EnemyChaseBaseInstance.DoExitLogic();
+    }
+
+    public override void FrameUpdate()
+    {
+        base.FrameUpdate();
+        enemy.EnemyChaseBaseInstance.DoFrameUpdateLogic();
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        enemy.EnemyChaseBaseInstance.DoPhysicsLogic();
     }
 }

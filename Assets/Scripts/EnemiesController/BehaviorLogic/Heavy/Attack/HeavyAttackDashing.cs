@@ -5,15 +5,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Heavy-Attack Dashing", menuName = "Heavy Logic/Attack Logic/Dashing")]
 public class HeavyAttackDashing : HeavyAttackSOBase
 {
-    [SerializeField] private Rigidbody2D BulletPrefab;
-
-    [SerializeField] private float _bulletSpeed = 5f;
-    [SerializeField] private float _timeBetweenShot = 1f;
     [SerializeField] private float _distanceToCountExit = 3f;
     [SerializeField] private float _timeTillExit = 3f;
+    [SerializeField] private float detectionRange = 5f; 
+    [SerializeField] private float dashSpeed = 10f; 
+    [SerializeField] private float dashDuration = 0.5f; 
+    [SerializeField] private float dashCooldown = 2f; 
 
-    private float _timer;
     private float _exitTimer;
+    private bool isDashing = false;
+    private bool isDashOnCooldown = false;
+    private float dashStartTime;
+    private float dashCooldownTimer;
+    private Vector2 dashDirection;
+    private HeavyBase enemy;
+    private Transform playerTransform;
     public override void DoAnimationTriggerEventLogic(HeavyBase.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -22,6 +28,10 @@ public class HeavyAttackDashing : HeavyAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        _exitTimer = 0f;
+        isDashing = false;
+        isDashOnCooldown = false;
+        dashCooldownTimer = 0f;
     }
 
     public override void DoExitLogic()
@@ -33,16 +43,50 @@ public class HeavyAttackDashing : HeavyAttackSOBase
     {
         base.DoFrameUpdateLogic();
 
-        if (_timer > _timeBetweenShot)
+        if (isDashing)
         {
-            _timer = 0f;
-            Vector2 dir = (playerTransform.position - enemy.transform.position).normalized;
-
-            Rigidbody2D bullet = GameObject.Instantiate(BulletPrefab, enemy.transform.position, Quaternion.identity);
-            bullet.velocity = dir * _bulletSpeed;
-
+            ContinueDashing();
+        }
+        else
+        {
+            HandleStateTransition();
+            DetectAndStartDash();
+            enemy.MoveEnemy(Vector2.zero);
         }
 
+        if (isDashOnCooldown)
+        {
+            dashCooldownTimer += Time.deltaTime;
+            if (dashCooldownTimer >= dashCooldown)
+            {
+                isDashOnCooldown = false;
+            }
+        }
+    }
+
+    public override void DoPhysicsLogic()
+    {
+        base.DoPhysicsLogic();
+    }
+
+    public override void Initialize(GameObject gameObject, HeavyBase enemy)
+    {
+        base.Initialize(gameObject, enemy);
+        this.enemy = enemy;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    public override void ResetValue()
+    {
+        base.ResetValue();
+        _exitTimer = 0f;
+        isDashing = false;
+        isDashOnCooldown = false;
+        dashCooldownTimer = 0f;
+    }
+
+    private void HandleStateTransition()
+    {
         if (Vector2.Distance(playerTransform.position, enemy.transform.position) > _distanceToCountExit)
         {
             _exitTimer += Time.deltaTime;
@@ -56,24 +100,34 @@ public class HeavyAttackDashing : HeavyAttackSOBase
         {
             _exitTimer = 0f;
         }
-
-        enemy.MoveEnemy(Vector2.zero);
-
-        _timer += Time.deltaTime;
     }
 
-    public override void DoPhysicsLogic()
+    private void DetectAndStartDash()
     {
-        base.DoPhysicsLogic();
+        if (!isDashOnCooldown && Vector2.Distance(playerTransform.position, enemy.transform.position) <= detectionRange)
+        {
+            StartDashing();
+        }
     }
 
-    public override void Initialize(GameObject gameObject, HeavyBase enemy)
+    private void StartDashing()
     {
-        base.Initialize(gameObject, enemy);
+        isDashing = true;
+        dashStartTime = Time.time;
+        dashDirection = (playerTransform.position - enemy.transform.position).normalized;
     }
 
-    public override void ResetValue()
+    private void ContinueDashing()
     {
-        base.ResetValue();
+        if (Time.time < dashStartTime + dashDuration)
+        {
+            enemy.transform.position += (Vector3)(dashDirection * dashSpeed * Time.deltaTime);
+        }
+        else
+        {
+            isDashing = false;
+            isDashOnCooldown = true;
+            dashCooldownTimer = 0f;
+        }
     }
 }

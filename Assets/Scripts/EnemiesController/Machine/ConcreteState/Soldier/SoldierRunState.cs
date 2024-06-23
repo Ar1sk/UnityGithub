@@ -2,39 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierAttackState : SoldierState
+public class SoldierRunState : SoldierState
 {
-    public SoldierAttackState(SoldierBase enemy, SoldierStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public SoldierRunState(SoldierBase enemy, SoldierStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
 
     public override void AnimationTriggerEvent(SoldierBase.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
-        enemy.EnemyAttackBaseInstance.DoAnimationTriggerEventLogic(triggerType);
+        enemy.EnemyRunBaseInstance.DoAnimationTriggerEventLogic(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
-        enemy.EnemyAttackBaseInstance.DoEnterLogic();
+        enemy.EnemyRunBaseInstance.DoEnterLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        enemy.EnemyAttackBaseInstance.DoExitLogic();
+        enemy.EnemyRunBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
+        enemy.EnemyRunBaseInstance.DoFrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.EnemyAttackBaseInstance.DoPhysicsLogic();
+        enemy.EnemyRunBaseInstance.DoPhysicsLogic();
     }
 }

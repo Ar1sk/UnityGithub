@@ -2,17 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierChaseSOBase : MonoBehaviour
+public class SoldierChaseSOBase : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
+    protected SoldierBase enemy;
+    protected Transform transform;
+    protected GameObject gameObject;
+
+    protected Transform playerTransform;
+
+    public virtual void Initialize(GameObject gameObject, SoldierBase enemy)
     {
-        
+        this.gameObject = gameObject;
+        transform = gameObject.transform;
+        this.enemy = enemy;
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void DoEnterLogic()
     {
-        
+
+    }
+
+    public virtual void DoExitLogic()
+    {
+        ResetValue();
+    }
+
+    public virtual void DoFrameUpdateLogic()
+    {
+        if (enemy.IsWithinAttackArea)
+        {
+            enemy.StateMachine.ChangeState(enemy.AttackState);
+        }
+    }
+
+    public virtual void DoPhysicsLogic()
+    {
+
+    }
+
+    public virtual void DoAnimationTriggerEventLogic(SoldierBase.AnimationTriggerType triggerType)
+    {
+
+    }
+
+    public virtual void ResetValue()
+    {
+
     }
 }

@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Soldier-Idle-Random Wander", menuName = "Soldier Logic/Idle Logic/Random Wander")]
-public class SoldierIdleRandomWander : SoldierIdleSOBase
+[CreateAssetMenu(fileName = "Soldier-Run-From Player", menuName = "Soldier Logic/Run Logic/Run From Player")]
+public class SoldierRunAway : SoldierRunSOBase
 {
-    [SerializeField] private float MovementRange = 5f;
-    [SerializeField] private float MovementSpeed = 1f;
-
-    private Vector3 _targetpos;
-    private Vector3 _direction;
+    [SerializeField] private float _movementSpeed = 1.75f;
 
     public override void DoAnimationTriggerEventLogic(SoldierBase.AnimationTriggerType triggerType)
     {
@@ -19,7 +15,6 @@ public class SoldierIdleRandomWander : SoldierIdleSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        _targetpos = GetRandomPointInCircle();
     }
 
     public override void DoExitLogic()
@@ -31,13 +26,13 @@ public class SoldierIdleRandomWander : SoldierIdleSOBase
     {
         base.DoFrameUpdateLogic();
 
-        _direction = (_targetpos - enemy.transform.position).normalized;
+        Vector2 MoveDirection = (playerTransform.position - enemy.transform.position).normalized;
+        enemy.MoveEnemy(-MoveDirection * _movementSpeed);
 
-        enemy.MoveEnemy(_direction * MovementSpeed);
-
-        if ((enemy.transform.position - _targetpos).sqrMagnitude < 0.01f)
+        if (enemy.IsAggroed)
         {
-            _targetpos = GetRandomPointInCircle();
+            new WaitForSeconds(2f);
+            enemy.StateMachine.ChangeState(enemy.ChaseState);
         }
     }
 
@@ -54,10 +49,5 @@ public class SoldierIdleRandomWander : SoldierIdleSOBase
     public override void ResetValue()
     {
         base.ResetValue();
-    }
-
-    private Vector3 GetRandomPointInCircle()
-    {
-        return enemy.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * MovementRange;
     }
 }

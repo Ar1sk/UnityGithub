@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierAttackSOBase : ScriptableObject
+public class SoldierRunSOBase : ScriptableObject
 {
     protected SoldierBase enemy;
     protected Transform transform;
@@ -31,9 +31,10 @@ public class SoldierAttackSOBase : ScriptableObject
 
     public virtual void DoFrameUpdateLogic()
     {
-        if (enemy.IsInRange)
+        if (enemy.IsAggroed)
         {
-            enemy.StateMachine.ChangeState(enemy.RunState);
+            new WaitForSeconds(2f);
+            enemy.StateMachine.ChangeState(enemy.ChaseState);
         }
     }
 

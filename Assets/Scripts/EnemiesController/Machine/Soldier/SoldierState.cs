@@ -2,17 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierState : MonoBehaviour
+public class SoldierState
 {
-    // Start is called before the first frame update
-    void Start()
+    protected SoldierBase enemy;
+    protected SoldierStateMachine enemyStateMachine;
+
+    public SoldierState(SoldierBase enemy, SoldierStateMachine enemyStateMachine)
     {
-        
+        this.enemy = enemy;
+        this.enemyStateMachine = enemyStateMachine;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void EnterState()
     {
-        
+
+    }
+
+    public virtual void ExitState()
+    {
+
+    }
+
+    public virtual void FrameUpdate()
+    {
+
+    }
+
+    public virtual void PhysicsUpdate()
+    {
+
+    }
+
+    public virtual void AnimationTriggerEvent(SoldierBase.AnimationTriggerType triggerType)
+    {
+
     }
 }

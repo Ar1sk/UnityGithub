@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class SoldierAggroArea : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Playertarget { get; set; }
+    private SoldierBase _enemy;
+
+    private void Awake()
     {
-        
+        Playertarget = GameObject.FindGameObjectWithTag("Player");
+
+        _enemy = GetComponentInParent<SoldierBase>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject == Playertarget)
+        {
+            _enemy.SetAggroStatus(false);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject == Playertarget)
+        {
+            _enemy.SetAggroStatus(true);
+        }
     }
 }
